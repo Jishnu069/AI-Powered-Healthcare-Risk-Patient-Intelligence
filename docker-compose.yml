@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Backend/api/Dockerfile
+    container_name: healthcare-backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: healthcare-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://backend:8000/predict
+    depends_on:
+      - backend
